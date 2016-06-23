@@ -161,7 +161,7 @@ class EventInfo(object):
       return self.Branches.mcWeight[0]*self.Branches.SF_Pileup[0]*self.Branches.SF_ZVertex[0]
 
     def scalefactor(self):
-      return self.Branches.SF_Ele[0]*self.Branches.SF_Mu[0]*self.Branches.SF_Trigger[0]    
+      return self.Branches.SF_Ele[0]*self.Branches.SF_Mu[0]*self.Branches.SF_Trigger[0] #Necesary to run Analysis.py   
 
     def passGRL(self):
       return self.Branches.passGRL[0]
