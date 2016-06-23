@@ -31,7 +31,7 @@ class Job(object):
 
     #Setup functions
     def setupTree(self):
-      tree = ROOT.TChain("mini")
+      tree = ROOT.TChain("CxAODTuple")
       for filename in self.InputFiles:
         self.log("Adding file: " + filename)
         tree.Add(filename)
