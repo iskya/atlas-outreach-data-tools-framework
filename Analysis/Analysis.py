@@ -40,7 +40,7 @@ class Analysis(object):
         
     def doAnalysis(self):
         eventinfo = self.Store.getEventInfo()
-        weight = eventinfo.scalefactor()*eventinfo.eventWeight() if not self.getIsData() else 1
+        weight = eventinfo.scalefactor()*eventinfo.eventWeight() if not self.getIsData() else 1 #scalefactor needed
         self.countEvent("all", weight)
         if self.analyze():
             self.countEvent("final", weight)
