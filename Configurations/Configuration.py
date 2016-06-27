@@ -10,9 +10,12 @@ Job = {
 
 Processes = {
   # Diboson processes
-  "WW"                    : "Input/MC/mc_105985.WW.root",
-  "ZZ"                    : "Input/MC/mc_105986.ZZ.root",
-  "WZ"                    : "Input/MC/mc_105987.WZ.root",
+  "WW"                    : "Input/MC/data15_13TeV.00276262.physics_Main.HIGG5D1.21-3b_Tuple.root"
+  #"ZZ"                    : "Input/MC/mc_105986.ZZ.root",
+  #"WZ"                    : "Input/MC/mc_105987.WZ.root",
+  }
+  
+"""
 
   # single top processes
   "stop_tchan_top"        : "Input/MC/mc_110090.stop_tchan_top.root",
@@ -71,3 +74,4 @@ Processes = {
   "data_Egamma"           : "Input/Data/DataEgamma*.root",
   "data_Muons"            : "Input/Data/DataMuons*.root",
 }
+"""
