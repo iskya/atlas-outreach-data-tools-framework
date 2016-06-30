@@ -40,11 +40,11 @@ def selectAndSortContainer(container, selectingFunction, sortingFunction):
     return sorted(selectedContainer, key=sortingFunction, reverse=True)
 
 # Event Selection Helpers
-def StandardEventCuts(eventinfo):
-    if not (eventinfo.triggeredByElectron() or eventinfo.triggeredByMuon()): return False
-    if not eventinfo.passGRL(): return False
-    if not eventinfo.hasGoodVertex(): return False
-    return True;
+#def StandardEventCuts(eventinfo):
+    #if not (eventinfo.triggeredByElectron() or eventinfo.triggeredByMuon()): return False
+    #if not eventinfo.passGRL(): return False
+    #if not eventinfo.hasGoodVertex(): return False
+    #return True;
     
     
 # Variable Definitions:
