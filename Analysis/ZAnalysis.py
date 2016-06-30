@@ -53,71 +53,71 @@ class ZAnalysis(Analysis.Analysis):
   def analyze(self):
       # retrieving objects
       eventinfo = self.Store.getEventInfo()
-      weight = eventinfo.scalefactor()*eventinfo.eventWeight() if not self.getIsData() else 1
+      weight = 1 #set to 1
       self.countEvent("no cut", weight)
       
       # apply standard event based selection
-      if not AH.StandardEventCuts(eventinfo): return False
+      #if not AH.StandardEventCuts(eventinfo): return False
       self.countEvent("EventCuts", weight)
 
       # Lepton Requirements
-      GoodLeptons = AH.selectAndSortContainer(self.Store.getLeptons(), AH.isGoodLepton, lambda p: p.pt())
-      if not (len(GoodLeptons) == 2): return False
+      #GoodLeptons = AH.selectAndSortContainer(self.Store.getLeptons(), AH.isGoodLepton, lambda p: p.pt())
+      #if not (len(GoodLeptons) == 2): return False
       self.countEvent("2 high pt Leptons", weight)
 
-      leadLepton  = GoodLeptons[0]
-      trailLepton = GoodLeptons[1]
+      #leadLepton  = GoodLeptons[0]
+      #trailLepton = GoodLeptons[1]
 
       # test Z candidate
-      if not (leadLepton.charge() * trailLepton.charge() < 0): return False
-      if not (abs(leadLepton.pdgId()) == abs(trailLepton.pdgId())): return False
-      if not (abs((leadLepton.tlv() + trailLepton.tlv()).M() - Constants.Z_Mass) < 20): return False
+      #if not (leadLepton.charge() * trailLepton.charge() < 0): return False
+      #if not (abs(leadLepton.pdgId()) == abs(trailLepton.pdgId())): return False
+      #if not (abs((leadLepton.tlv() + trailLepton.tlv()).M() - Constants.Z_Mass) < 20): return False
 
       # Vertex Histograms
-      self.hist_vxp_z.Fill(eventinfo.primaryVertexPosition(), weight)
-      self.hist_pvxp_n.Fill(eventinfo.numberOfVertices(), weight)
+      #self.hist_vxp_z.Fill(eventinfo.primaryVertexPosition(), weight)
+      #self.hist_pvxp_n.Fill(eventinfo.numberOfVertices(), weight)
 
       # Z boson Histograms
-      self.invMass.Fill((leadLepton.tlv() + trailLepton.tlv()).M(), weight)
+      #self.invMass.Fill((leadLepton.tlv() + trailLepton.tlv()).M(), weight)
 
       # Missing Et Histograms
       etmiss    = self.Store.getEtMiss()
       self.hist_etmiss.Fill(etmiss.et(),weight)
 
-      self.hist_leptn.Fill(len(GoodLeptons), weight)
+      #self.hist_leptn.Fill(len(GoodLeptons), weight)
 
       # Leading Lepton Histograms
-      self.hist_leadleptpt.Fill(leadLepton.pt(), weight)
-      self.hist_leadlepteta.Fill(leadLepton.eta(), weight)
-      self.hist_leadleptE.Fill(leadLepton.e(), weight)
-      self.hist_leadleptphi.Fill(leadLepton.phi(), weight)
-      self.hist_leadleptch.Fill(leadLepton.charge(), weight)
-      self.hist_leadleptID.Fill(leadLepton.pdgId(), weight)
-      self.hist_leadleptptc.Fill(leadLepton.isoptconerel30(), weight)
-      self.hist_leadleptetc.Fill(leadLepton.isoetconerel20(), weight)
-      self.hist_leadlepz0.Fill(leadLepton.z0(), weight)
-      self.hist_leadlepd0.Fill(leadLepton.d0(), weight)
+      #self.hist_leadleptpt.Fill(leadLepton.pt(), weight)
+      #self.hist_leadlepteta.Fill(leadLepton.eta(), weight)
+      #self.hist_leadleptE.Fill(leadLepton.e(), weight)
+      #self.hist_leadleptphi.Fill(leadLepton.phi(), weight)
+      #self.hist_leadleptch.Fill(leadLepton.charge(), weight)
+      #self.hist_leadleptID.Fill(leadLepton.pdgId(), weight)
+      #self.hist_leadleptptc.Fill(leadLepton.isoptconerel30(), weight)
+      #self.hist_leadleptetc.Fill(leadLepton.isoetconerel20(), weight)
+      #self.hist_leadlepz0.Fill(leadLepton.z0(), weight)
+      #self.hist_leadlepd0.Fill(leadLepton.d0(), weight)
 
       # Trailing Lepton Histograms
-      self.hist_trailleptpt.Fill(trailLepton.pt(), weight)
-      self.hist_traillepteta.Fill(trailLepton.eta(), weight)
-      self.hist_trailleptE.Fill(trailLepton.e(), weight)
-      self.hist_trailleptphi.Fill(trailLepton.phi(), weight)
-      self.hist_trailleptch.Fill(trailLepton.charge(), weight)
-      self.hist_trailleptID.Fill(trailLepton.pdgId(), weight)
-      self.hist_trailleptptc.Fill(trailLepton.isoptconerel30(), weight)
-      self.hist_trailleptetc.Fill(trailLepton.isoetconerel20(), weight)
-      self.hist_traillepz0.Fill(trailLepton.z0(), weight)
-      self.hist_traillepd0.Fill(trailLepton.d0(), weight)
+      #self.hist_trailleptpt.Fill(trailLepton.pt(), weight)
+      #self.hist_traillepteta.Fill(trailLepton.eta(), weight)
+      #self.hist_trailleptE.Fill(trailLepton.e(), weight)
+      #self.hist_trailleptphi.Fill(trailLepton.phi(), weight)
+      #self.hist_trailleptch.Fill(trailLepton.charge(), weight)
+      #self.hist_trailleptID.Fill(trailLepton.pdgId(), weight)
+      #self.hist_trailleptptc.Fill(trailLepton.isoptconerel30(), weight)
+      #self.hist_trailleptetc.Fill(trailLepton.isoetconerel20(), weight)
+      #self.hist_traillepz0.Fill(trailLepton.z0(), weight)
+      #self.hist_traillepd0.Fill(trailLepton.d0(), weight)
 
       # Jet Histograms
-      jets = AH.selectAndSortContainer(self.Store.getJets(), AH.isGoodJet, lambda p: p.pt())
-      self.hist_njets.Fill(len(jets), weight)
-      [self.hist_jetm.Fill(jet.m(), weight) for jet in jets]
-      [self.hist_jetspt.Fill(jet.pt(), weight) for jet in jets]
-      [self.hist_jetJVF.Fill(jet.jvf(), weight) for jet in jets]
-      [self.hist_jeteta.Fill(jet.eta(), weight) for jet in jets]
-      [self.hist_jetmv1.Fill(jet.mv1(), weight) for jet in jets]
+      #jets = AH.selectAndSortContainer(self.Store.getJets(), AH.isGoodJet, lambda p: p.pt())
+      #self.hist_njets.Fill(len(jets), weight)
+      #[self.hist_jetm.Fill(jet.m(), weight) for jet in jets]
+      #[self.hist_jetspt.Fill(jet.pt(), weight) for jet in jets]
+      #[self.hist_jetJVF.Fill(jet.jvf(), weight) for jet in jets]
+      #[self.hist_jeteta.Fill(jet.eta(), weight) for jet in jets]
+      #[self.hist_jetmv1.Fill(jet.mv1(), weight) for jet in jets]
       
       return True
   
