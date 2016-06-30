@@ -71,7 +71,7 @@ class EtMiss(object):
         self._tlv     = None
     
     def et(self):
-      return self.Branches.Met_et[0]*0.001
+      return self.Branches.met_nom_Nominal__met[0]*0.001
 
     """def phi(self):
       return self.Branches.Met_phi[0]"""
