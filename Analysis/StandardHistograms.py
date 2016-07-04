@@ -15,6 +15,7 @@ def getStandardHistogram(name):
     if (name == "jet_jvf"):         return ROOT.TH1D("jet_jvf",         "Jet Vertex Fraction; JVF ; Jets", 20, 0, 1)
     if (name == "jet_eta"):         return ROOT.TH1D("jet_eta",         "Jet Pseudorapidity; #eta^{jet}; Jets", 30, -3, 3)
     if (name == "jet_MV1"):         return ROOT.TH1D("jet_MV1",         "Jet MV1; MV1 weight ; Jets", 20, 0, 1)
+    if (name == "jet_phi"):         return ROOT.TH1D("jet_phi",         "Jet Azimuthal Angle ; #phi^{jet}; Jets", 32, -3.2, 3.2)
     if (name == "lep_n"):           return ROOT.TH1D("lep_n",           "Number of Leptons; N_{lep} ;Events", 10, -0.5, 9.5)
                                                                         
     if (name == "lep_pt"):          return ROOT.TH1D("lep_pt",          "Lepton Transverse Momentum;p_{T}^{lep} [GeV];Leptons", 20, 0, 200)
