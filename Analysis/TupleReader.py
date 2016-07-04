@@ -34,10 +34,12 @@ class TupleReader(object):
         self.EtMiss = EtMiss(self)
 
         #JetInfo
-        self.jet_nom_Nominal__pt   = self.activate( "f", "jet_nom_Nominal__pt",  1)
-        self.jet_nom_Nominal__eta  = self.activate( "f", "jet_nom_Nominal__eta",  1)
-        self.jet_nom_Nominal__phi  = self.activate( "f", "jet_nom_Nominal__phi",  1)
-        self.Jets = Jets(self)
+        max_Jet = 10
+        self.jet_nom_Nominal__pt   = self.activate( "f", "jet_nom_Nominal__pt",  max_Jet)
+        self.jet_nom_Nominal__eta  = self.activate( "f", "jet_nom_Nominal__eta", max_Jet)
+        self.jet_nom_Nominal__phi  = self.activate( "f", "jet_nom_Nominal__phi", max_Jet)
+
+        self.Jets = [Jets(i, self) for i in range(0,max_Jet)]
                        
                 
     def activate(self, vartype,  branchname, maxlength):
@@ -114,6 +116,8 @@ class EventInfo(object):
       return self.Branches.eventInfo_nom_Nominal__MCEventWeight[0]
     
 
+    def __str__(self):
+        return "EventInfo: run: %i  event: %i  eventweight: %4.2f" % (self.runNumber(), self.eventNumber(), self.eventWeight())
 #===========================================================
 
 class Jets(object):
@@ -121,9 +125,10 @@ class Jets(object):
     auxillary information (mv1, jvf). Truth information regarding the flavour of the quark they com from (truepdgid)
     and whether they were matched to a true jet (isTrueJet) is available.
     """
-    def __init__(self, branches):
+    def __init__(self, idNr, branches):
         super(Jets, self).__init__()
         self.Branches = branches
+        self.idNr = idNr
         self._tlv = None
 
     def tlv(self):
@@ -134,18 +139,19 @@ class Jets(object):
       return self._tlv
     
     def pt(self):
-      return self.Branches.jet_nom_Nominal__pt[0]*0.001
+      return self.Branches.jet_nom_Nominal__pt[self.idNr]*0.001
     
     def eta(self):
-      return self.Branches.jet_nom_Nominal__eta[0]
+      return self.Branches.jet_nom_Nominal__eta[self.idNr]
     
     def phi(self):
-      return self.Branches.jet_nom_Nominal__phi[0]
+      return self.Branches.jet_nom_Nominal__phi[self.idNr]
+
+    def __str__(self):
+        return "Jet %d: pt: %4.3f  eta: %4.3f  phi: %4.3f" % (self.idNr, self.pt(), self.eta(), self.phi())
 
 #===========================================================
 
-    def __str__(self):
-        return "EventInfo: run: %i  event: %i  eventweight: %4.2f" % (self.runNumber(), self.eventNumber(), self.eventWeight())
 
 
 
