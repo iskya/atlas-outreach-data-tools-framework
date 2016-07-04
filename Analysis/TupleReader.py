@@ -32,7 +32,13 @@ class TupleReader(object):
         #EtMissInfo
         self.met_nom_Nominal__met   = self.activate( "f", "met_nom_Nominal__met",  1)
         self.EtMiss = EtMiss(self)
-                
+
+        #JetInfo
+        self.jet_nom_Nominal__pt   = self.activate( "f", "jet_nom_Nominal__pt",  1)
+        self.jet_nom_Nominal__eta  = self.activate( "f", "jet_nom_Nominal__eta",  1)
+        self.jet_nom_Nominal__phi  = self.activate( "f", "jet_nom_Nominal__phi",  1)
+        self.Jets = Jets(self)
+                       
                 
     def activate(self, vartype,  branchname, maxlength):
         variable = array(vartype,[0]*maxlength)
@@ -51,12 +57,9 @@ class TupleReader(object):
         
     def getEventInfo(self):
         return self.EventInfo
-        
-    #def getLeptons(self):
-        #return self.Leptons[:self.Lep_n[0]]
     
-    #def getJets(self):
-        #return self.Jets[:self.Jet_n[0]]
+    def getJets(self):
+        return self.Jets
 
 #===========================================================
 
@@ -102,7 +105,7 @@ class EventInfo(object):
       return self.Branches.eventInfo_nom_Nominal__MCEventWeight[0]*self.Branches.eventInfo_nom_Nominal__Pileupweight[0]*self.Branches.eventInfo_nom_Nominal__ZPV[0]
 
     #def scalefactor(self):
-      #return self.Branches.SF_Ele[0]*self.Branches.SF_Mu[0]*self.Branches.SF_Trigger[0] 
+      #return self.Branches.SF_Ele[0]*self.Branches.SF_Mu[0]*self.Branches.SF_Trigger[0]  !!SE NECESITA PARA LA FUNCION doAnalysis DE ANALYSIS.PY !!! 
 
     #def passGRL(self):
       #return self.Branches.passGRL[0]
@@ -110,23 +113,39 @@ class EventInfo(object):
     def mcWeight(self):
       return self.Branches.eventInfo_nom_Nominal__MCEventWeight[0]
     
-    #def hasGoodVertex(self):
-      #return self.Branches.hasGoodVertex[0]
+
+#===========================================================
+
+class Jets(object):
+    """Jet objects have accessors regarding their kinematic information (pt, eta, phi, e), their properties (m), and
+    auxillary information (mv1, jvf). Truth information regarding the flavour of the quark they com from (truepdgid)
+    and whether they were matched to a true jet (isTrueJet) is available.
+    """
+    def __init__(self, branches):
+        super(Jets, self).__init__()
+        self.Branches = branches
+        self._tlv = None
+
+    def tlv(self):
+      if self._tlv == None:
+        self._tlv = ROOT.TLorentzVector()
+      if self.pt() != self._tlv.Pt():
+        self._tlv.SetPtEtaPhiE(self.pt(), self.eta(), self.phi(), self.e())
+      return self._tlv
     
-    #def numberOfVertices(self):
-      #return self.Branches.pvxp_n[0]
+    def pt(self):
+      return self.Branches.jet_nom_Nominal__pt[0]*0.001
+    
+    def eta(self):
+      return self.Branches.jet_nom_Nominal__eta[0]
+    
+    def phi(self):
+      return self.Branches.jet_nom_Nominal__phi[0]
 
-    #def primaryVertexPosition(self):
-      #return self.Branches.vxp_z[0]
-
-    #def triggeredByElectron(self):
-      #return self.Branches.trigE[0]
-
-    #def triggeredByMuon(self):
-      #return self.Branches.trigM[0]
+#===========================================================
 
     def __str__(self):
         return "EventInfo: run: %i  event: %i  eventweight: %4.2f" % (self.runNumber(), self.eventNumber(), self.eventWeight())
 
 
-#===========================================================
+
