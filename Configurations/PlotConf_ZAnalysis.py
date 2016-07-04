@@ -38,36 +38,15 @@ config = {
 
 "Paintables": {
     "Stack": {
-        "Order": ["Diboson", "DrellYan", "W", "Z", "stop", "ttbar"],
+        "Order": ["Diboson"], 
         "Processes" : {                
             "Diboson" : {
                 "Color"         : "#fa7921",
                 "Contributions" : ["WW", "WZ", "ZZ"]},
-
-            "DrellYan": {
-                "Color"         : "#5bc0eb",
-                "Contributions" : ["DYeeM08to15", "DYeeM15to40", "DYmumuM08to15", "DYmumuM15to40", "DYtautauM08to15", "DYtautauM15to40"]},
-
-            "stop": {
-                "Color"         : "#fde74c",
-                "Contributions" : ["stop_tchan_top", "stop_tchan_antitop", "stop_schan", "stop_wtchan"]},
-
-            "ttbar": {
-                "Color"         : "#9bc53d",
-                "Contributions" : ["ttbar_lep", "ttbar_had"]},
-
-            "W": {
-                "Color"         : "#e55934",
-                "Contributions" : ["WenuJetsBVeto", "WenuWithB", "WenuNoJetsBVeto", "WmunuJetsBVeto", "WmunuWithB", "WmunuNoJetsBVeto", "WtaunuJetsBVeto", "WtaunuWithB", "WtaunuNoJetsBVeto"]},
-                                
-            "Z": {              
-                "Color"         : "#086788",
-                "Contributions" : ["Zee", "Zmumu", "Ztautau"]},
-        }
+        }  
     },
-
     "data" : {
-        "Contributions": ["data_Egamma", "data_Muons"]}
+        "Contributions": ["data_Muons"]}
 },
 
 "Depictions": {
